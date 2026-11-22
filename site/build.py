@@ -82,7 +82,7 @@ def build(output):
     output.mkdir(parents=True, exist_ok=True)
     catalogue = load_catalogue()
     (output / "data.json").write_text(json.dumps(catalogue, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    for filename in ("index.html", "styles.css", "app.js", "engine-logic.mjs"):
+    for filename in ("index.html", "styles.css", "app.js", "engine-logic.mjs", "algodyne-mark.svg"):
         shutil.copyfile(SITE / filename, output / filename)
     (output / ".nojekyll").touch()
     return catalogue
