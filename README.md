@@ -25,9 +25,11 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 **CPU or mixed CPU/GPU, GGUF:** Start with llama.cpp or ik_llama.cpp. Check offload, quantization, context memory, and CPU bandwidth.
 
-**Apple Silicon, broad coverage:** Explore mlx-lm, llama.cpp, and vLLM Metal. Check macOS/Metal requirements, unified memory, and batch size.
+**Apple Silicon, broad coverage:** Explore mlx-lm, MLX Swift LM, llama.cpp, and vLLM Metal. Check macOS/Metal requirements, unified memory, and batch size.
 
-**Apple Silicon, specialized agents:** Explore Kapitsa, Espetero, and TensorFold. Check supported checkpoints, image input, and tool calls.
+**Apple Silicon, specialized agents:** Explore Kapitsa, Espetero, TensorFold, Rapid-MLX, and rMLX. Check supported checkpoints, image input, and tool calls.
+
+**Apple Silicon, native Swift:** Explore MLX Swift LM, swama, and SwiftLM. Distinguish embeddable libraries from standalone servers.
 
 **Apple Silicon, native MTP decoding:** Explore MTPLX for models with multi-token-prediction heads. Check model-pack support, unified-memory requirements, and measured benefit over plain decoding.
 
@@ -41,9 +43,9 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 **AMD Strix Halo:** Explore Gufo. Confirm the exact Ryzen AI MAX target and ROCm setup.
 
-**Multi-user or distributed serving:** Explore vLLM, SGLang, and TensorRT-LLM. Measure throughput, TTFT, and tail latency together.
+**Multi-user or distributed serving:** Explore vLLM, SGLang, RTP-LLM, and TensorRT-LLM. Measure throughput, TTFT, and tail latency together.
 
-**Phones, browsers, and embedded devices:** Explore ExecuTorch, MNN, and WebLLM. Check model conversion, memory, power, and accelerator delegates.
+**Phones, browsers, and embedded devices:** Explore LiteRT-LM, ONNX Runtime GenAI, ExecuTorch, MNN, and WebLLM. Check model conversion, memory, power, and accelerator delegates.
 
 These are **starting points**, not universal recommendations. Verify platform and model compatibility in the linked project's documentation.
 
@@ -53,6 +55,7 @@ These projects deliberately optimize a narrower combination of model architectur
 
 - [Avalon](https://github.com/freriadoc/Avalon) - Fork of llama.cpp tuned for Qwen3.8-Flash-Next, with host/GPU expert caching and an emphasis on AMD/ROCm.
 - [Basalt](https://github.com/jesdga95/basalt) - Blackwell-focused local engine with Qwen and DeepSeek model paths and host-resident MoE experts.
+- [DeepInfer](https://github.com/deepseek-ai/DeepInfer) - DeepSeek's model-specific offline inference framework with optimized kernels, expert parallelism, asynchronous scheduling, and DSpark verification.
 - [FreeToken](https://github.com/FlashML-org/FreeToken) - Edge-native MoE serving engine with CPU/GPU co-execution, expert caching, and elastic memory allocation.
 - [Gufo](https://github.com/gufo-org/gufo) - Native engine tailored to AMD Strix Halo, spanning language and additional modalities.
 - [Infernix](https://github.com/BarachielFallen/infernix) - NInfer-derived C++/CUDA engine tuned for Qwen-family inference on RTX 50-series hardware.
@@ -65,19 +68,27 @@ These projects deliberately optimize a narrower combination of model architectur
 - [Sync-Strata](https://github.com/hiruhiru2005/sync-strata) - Strata fork with dedicated Qwen3.8-Flash-Next model packs and quantization work.
 - [TensorFold](https://github.com/ashhart/TensorFold) - Native Zig engine with direct Metal, CUDA, and Vulkan execution paths and speculative decoding.
 - [Xolotl](https://github.com/Indras-Mirror/Xolotl) - Substantially extended Strata descendant for large MoE models on consumer NVIDIA hardware.
-- [YASAKANI](https://github.com/yasakani-dev/yasakani) - Windows/NVIDIA model-specific CUDA engine, principally optimized for Qwen3.8-27B.
 - [yasaheni](https://github.com/sahenjp/yasaheni) - Linux and GGUF input port of the YASAKANI engine.
+- [YASAKANI](https://github.com/yasakani-dev/yasakani) - Windows/NVIDIA model-specific CUDA engine, principally optimized for Qwen3.8-27B.
 
 ## Apple Silicon inference
 
 - [Espetero](https://github.com/JarJarFran/espetero) - Native C++/Metal runtime supporting concurrent text, vision, and classification requests.
 - [Kapitsa](https://github.com/nace-ai/kapitsa) - Apple Silicon-native inference engine for selected model families and local coding-agent use.
+- [libmlxforge](https://github.com/hvasconcelos/libmlxforge) - Embeddable C++/MLX LLM engine with continuous batching and a C ABI; its HTTP server is a testing harness.
+- [lithos-metal](https://github.com/lithos-ai/lithos-metal) - Open-source native Metal engine with mixer megakernels, GPU-resident generation control, and DSpark speculative decoding.
 - [MLX](https://github.com/ml-explore/mlx) - Apple Silicon array-compute framework used to build inference engines; **not a standalone LLM server**.
+- [MLX Swift LM](https://github.com/ml-explore/mlx-swift-lm) - Swift-native LLM/VLM inference library on MLX, providing model implementations, generation, quantized-model support, and fine-tuning.
 - [mlx-dspark](https://github.com/ARahim3/mlx-dspark) - MLX-native Apple Silicon inference engine with DSpark, DFlash, and lookup speculative decoding, target-model token verification, and OpenAI/Anthropic-compatible serving.
 - [mlx-lm](https://github.com/ml-explore/mlx-lm) - General-purpose LLM inference and fine-tuning on the MLX framework.
+- [mlx-serve](https://github.com/ddalcu/mlx-serve) - Native Zig-backed Apple Silicon runtime and Swift app for local language and multimodal model serving through several API formats.
 - [mlx-vlm](https://github.com/Neywa-Labs/mlx-vlm) - Vision-language inference and model utilities on MLX.
 - [MTPLX](https://github.com/youssofal/MTPLX) - Apple Silicon MLX-based runtime with custom Metal kernels and native multi-token-prediction speculative decoding, plus OpenAI/Anthropic-compatible serving.
 - [oMLX](https://github.com/jundot/omlx) - MLX-based inference server with continuous batching and tiered, persistent KV caching.
+- [Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) - Apple Silicon MLX serving engine with continuous batching, prefix caching, agent tool-call support, and OpenAI/Anthropic-compatible APIs.
+- [rMLX](https://github.com/Pushkinist/rMLX) - Rust-native, single-binary MLX inference server for Apple Silicon with multimodal generation and quantized KV-cache options.
+- [swama](https://github.com/Trans-N-ai/swama) - Swift/MLX local inference runtime for language, vision, embeddings, and speech with an OpenAI-compatible server and menu bar app.
+- [SwiftLM](https://github.com/SharpAI/SwiftLM) - Native Swift/MLX inference server for Apple Silicon with OpenAI-compatible serving and optional SSD-streamed MoE experts.
 - [TurboFieldfare](https://github.com/drumih/turbo-fieldfare) - Swift/Metal, Gemma 4-specific engine that streams routed experts from SSD to reduce resident memory.
 - [vLLM Metal](https://github.com/vllm-project/vllm-metal) - Apple Silicon plugin for vLLM, with MLX as a primary compute backend.
 
@@ -89,6 +100,7 @@ These projects deliberately optimize a narrower combination of model architectur
 - [llama.cpp](https://github.com/ggml-org/llama.cpp) - Portable C/C++ model execution with GGUF, broad quantization, and diverse CPU/GPU backends.
 - [mistral.rs](https://github.com/EricLBuehler/mistral.rs) - Rust inference runtime for local accelerated and quantized language/multimodal models.
 - [MLC-LLM](https://github.com/mlc-ai/mlc-llm) - Compiler and runtime deployment stack targeting multiple hardware platforms.
+- [ONNX Runtime GenAI](https://onnxruntime.ai/docs/genai/) - Generation runtime built on ONNX Runtime, handling token sampling, search, KV caching, and model-specific generation across execution providers.
 - [PowerInfer](https://github.com/Tiiny-AI/PowerInfer) - Local CPU/GPU heterogeneous LLM inference with activation-aware execution.
 
 ## Production and high-throughput serving
@@ -96,6 +108,8 @@ These projects deliberately optimize a narrower combination of model architectur
 - [FastDeploy](https://github.com/PaddlePaddle/FastDeploy) - Paddle ecosystem inference and serving stack with optimized model execution backends.
 - [LightLLM](https://github.com/ModelTC/LightLLM) - High-throughput LLM inference and dynamic request scheduling.
 - [LMDeploy](https://github.com/InternLM/lmdeploy) - Serving and deployment toolkit including the TurboMind inference engine.
+- [Mini-SGLang](https://github.com/sgl-project/mini-sglang) - Compact, runnable SGLang-style serving engine and readable reference for radix caching, chunked prefill, and tensor-parallel execution.
+- [RTP-LLM](https://github.com/alibaba/rtp-llm) - Alibaba's production LLM inference engine with custom CUDA kernels, dynamic batching, prefix caching, and disaggregated prefill/decode execution.
 - [SGLang](https://github.com/sgl-project/sglang) - High-performance generation and serving with request scheduling, prefix caching, and structured output.
 - [Sonar](https://github.com/dphnAI/sonar) - vLLM-derived inference engine formerly named Aphrodite Engine.
 - [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) - NVIDIA-optimized LLM execution with kernel, quantization, batching, and multi-GPU capabilities.
@@ -106,6 +120,7 @@ These projects deliberately optimize a narrower combination of model architectur
 ## On-device, edge, and browser inference
 
 - [ExecuTorch](https://github.com/pytorch/executorch) - PyTorch-native on-device execution stack for mobile, wearable, embedded, and other edge hardware.
+- [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM) - Google's cross-platform, on-device LLM runtime built on LiteRT for mobile, desktop, web, and embedded systems.
 - [MNN](https://github.com/alibaba/MNN) - Lightweight mobile and embedded neural-network runtime with LLM deployment support.
 - [ncnn](https://github.com/Tencent/ncnn) - Mobile-focused neural-network inference framework with CPU and GPU backends.
 - [TensorRT Edge-LLM](https://github.com/NVIDIA/TensorRT-Edge-LLM) - NVIDIA edge-device framework for optimized LLM inference.
