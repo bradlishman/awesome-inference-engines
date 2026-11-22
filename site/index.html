@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0d1115" />
+    <meta
+      name="description"
+      content="Discover inference engines, inspect documented hardware and model compatibility, and compare runtimes with primary-source evidence."
+    />
+    <title>Awesome Inference Engines — Find your runtime</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a
+          href="#top"
+          class="identity"
+          aria-label="Awesome Inference Engines home"
+        >
+          <span class="brand-symbol" aria-hidden="true"
+            ><span></span><span></span><span></span
+          ></span>
+          <span class="brand-copy"
+            ><strong>AWESOME</strong><small>INFERENCE ENGINES</small></span
+          >
+        </a>
+        <nav class="topnav" aria-label="Primary navigation">
+          <a href="#finder">Finder</a>
+          <a href="#directory">Directory</a>
+          <a href="#evidence">Evidence</a>
+        </nav>
+        <a
+          class="github-link"
+          href="https://github.com/bradlishman/awesome-inference-engines"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View on GitHub</a
+        >
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="hero-heading">
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <span class="signal" aria-hidden="true"></span> THE OPEN INFERENCE
+              ENGINE INDEX
+            </p>
+            <h1 id="hero-heading">
+              The right engine.<br /><em>For your machine.</em>
+            </h1>
+            <p class="hero-description">
+              Explore specialized local runtimes, serving systems, and
+              hardware-specific engines. Find documented candidates for your
+              setup, inspect the tradeoffs, and follow the evidence.
+            </p>
+            <div class="hero-actions">
+              <a href="#finder" class="primary-action">Find an engine</a>
+              <a href="#directory" class="secondary-action">Browse the index</a>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="visual-grid"></div>
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="core-stack"><i></i><i></i><i></i><b></b></div>
+            <div class="visual-label top-label">MODEL · ENGINE · HARDWARE</div>
+            <div class="visual-label bottom-label">
+              EXECUTION / EVIDENCE / FIT
+            </div>
+          </div>
+          <div class="hero-stats" aria-label="Catalogue statistics">
+            <div>
+              <strong id="stat-projects">—</strong
+              ><span>Indexed projects & resources</span>
+            </div>
+            <div>
+              <strong id="stat-sourced">—</strong
+              ><span>Sourced compatibility profiles</span>
+            </div>
+            <div>
+              <strong>Open</strong><span>Community-maintained reference</span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="section finder-section"
+          id="finder"
+          aria-labelledby="finder-heading"
+        >
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">01 / FIND YOUR FIT</p>
+              <h2 id="finder-heading">What can your machine run?</h2>
+              <p>
+                Select a hardware family, operating system, and optional model.
+                Results only claim what linked project documentation actually
+                supports.
+              </p>
+            </div>
+            <span class="section-mark">COMPATIBILITY EXPLORER</span>
+          </div>
+          <div class="finder-panel">
+            <div class="fields">
+              <label class="field"
+                ><span>HARDWARE TARGET</span
+                ><select id="hardware">
+                  <option value="any">Any hardware</option>
+                  <option value="blackwell">NVIDIA Blackwell / RTX 50</option>
+                  <option value="nvidia">NVIDIA CUDA (general)</option>
+                  <option value="apple">Apple Silicon</option>
+                  <option value="strix">AMD Strix Halo</option>
+                  <option value="amd">AMD / ROCm / RDNA</option>
+                  <option value="hybrid">CPU, RAM or SSD tiering</option>
+                </select></label
+              >
+              <label class="field"
+                ><span>OPERATING SYSTEM</span
+                ><select id="os">
+                  <option value="any">Any operating system</option>
+                  <option value="linux">Linux</option>
+                  <option value="windows">Windows</option>
+                  <option value="macos">macOS</option>
+                </select></label
+              >
+              <label class="field field-model"
+                ><span>MODEL OR FAMILY</span>
+                <input
+                  id="model"
+                  type="search"
+                  placeholder="e.g. Qwen3.8-Flash-Next"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+              </label>
+            </div>
+            <div class="finder-tools">
+              <p>
+                <span class="documented-dot" aria-hidden="true"></span>
+                Documented matches are <strong>upstream claims</strong>, not
+                hardware-tested guarantees.
+              </p>
+              <div class="tool-actions">
+                <button id="clear-filters" type="button" class="text-button">
+                  Clear filters</button
+                ><button
+                  id="share-filters"
+                  type="button"
+                  class="outline-button"
+                >
+                  Copy filter link
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="results-toolbar">
+            <div>
+              <h3>Engine candidates</h3>
+              <p id="finder-summary" role="status" aria-live="polite">
+                Loading compatibility profiles…
+              </p>
+            </div>
+            <label class="toggle-label"
+              ><input id="documented-only" type="checkbox" /> Documented matches
+              only</label
+            >
+          </div>
+          <div id="finder-results" class="engine-grid" aria-live="off"></div>
+          <div class="results-note">
+            No match means <strong>not documented in this catalogue</strong>—it
+            does not prove the engine cannot run your configuration. Check the
+            linked upstream source before deployment.
+          </div>
+        </section>
+
+        <section
+          class="section directory-section"
+          id="directory"
+          aria-labelledby="directory-heading"
+        >
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">02 / EXPLORE THE LANDSCAPE</p>
+              <h2 id="directory-heading">Every engine has an angle.</h2>
+              <p>
+                Specialized runtimes, general foundations, high-throughput
+                servers, execution libraries, and related technical references
+                in one searchable place.
+              </p>
+            </div>
+            <span class="section-mark">LIVE FROM THE GITHUB LIST</span>
+          </div>
+          <div class="directory-controls">
+            <label class="directory-search"
+              ><span class="sr-only">Search the index</span
+              ><input
+                id="search"
+                type="search"
+                placeholder="Search names, features, model families…"
+                autocomplete="off"
+            /></label>
+            <label class="category-filter"
+              ><span class="sr-only">Filter category</span
+              ><select id="category">
+                <option value="all">All categories</option>
+              </select></label
+            >
+          </div>
+          <div class="directory-meta">
+            <span id="directory-count" role="status">Loading index…</span
+            ><span>Alphabetical · Source-linked</span>
+          </div>
+          <div id="directory-results" class="directory-grid"></div>
+          <button id="show-more" class="load-more" type="button" hidden>
+            Show more projects
+          </button>
+        </section>
+
+        <section
+          class="section evidence-section"
+          id="evidence"
+          aria-labelledby="evidence-heading"
+        >
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">03 / EVIDENCE, NOT HYPE</p>
+              <h2 id="evidence-heading">A claim is not a benchmark.</h2>
+              <p>
+                Source provenance matters more than headline token rates. We
+                keep documented capabilities separate from independently
+                reproduced performance.
+              </p>
+            </div>
+          </div>
+          <div class="evidence-grid">
+            <article>
+              <span class="step-index">A</span>
+              <h3>Upstream documented</h3>
+              <p>
+                A maintainer describes a supported model, platform, or
+                optimization. The engine page links to that primary source.
+              </p>
+            </article>
+            <article>
+              <span class="step-index">B</span>
+              <h3>Community reproduced</h3>
+              <p>
+                A user supplies an exact engine build, model artifact, hardware
+                profile, and repeatable run receipt.
+              </p>
+            </article>
+            <article>
+              <span class="step-index">C</span>
+              <h3>Independently measured</h3>
+              <p>
+                A controlled test reports comparable workloads, latency,
+                throughput, and correctness with raw observations.
+              </p>
+            </article>
+          </div>
+          <div class="evidence-footer">
+            <div>
+              <strong>Run a benchmark yourself</strong>
+              <p>
+                The repository includes a dependency-free probe for
+                OpenAI-compatible streaming endpoints.
+              </p>
+            </div>
+            <a
+              href="https://github.com/bradlishman/awesome-inference-engines/tree/main/bench"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="outline-button"
+              >Open benchmark probe</a
+            >
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>
+          <strong>AWESOME INFERENCE ENGINES</strong>
+          <p>Open catalogue. Traceable evidence. Better runtime decisions.</p>
+        </div>
+        <div>
+          <a
+            href="https://github.com/bradlishman/awesome-inference-engines"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          ><a
+            href="https://github.com/bradlishman/awesome-inference-engines/blob/main/contributing.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Contribute</a
+          ><a
+            href="https://github.com/bradlishman/awesome-inference-engines/blob/main/compatibility.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Sources</a
+          >
+        </div>
+      </footer>
+    </div>
+
+    <div id="compare-dock" class="compare-dock" hidden>
+      <div>
+        <strong id="compare-count">0 selected</strong
+        ><span>Compare two engines side by side</span>
+      </div>
+      <div>
+        <button type="button" id="clear-compare" class="text-button">
+          Clear</button
+        ><button
+          type="button"
+          id="open-compare"
+          class="primary-action"
+          disabled
+        >
+          Compare engines
+        </button>
+      </div>
+    </div>
+    <dialog
+      id="compare-dialog"
+      class="compare-dialog"
+      aria-labelledby="compare-title"
+    >
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">SIDE BY SIDE</p>
+          <h2 id="compare-title">Engine comparison</h2>
+        </div>
+        <button
+          type="button"
+          id="close-compare"
+          class="close-button"
+          aria-label="Close comparison"
+        >
+          ×
+        </button>
+      </div>
+      <div id="comparison-content"></div>
+      <p class="compare-caveat">
+        Capabilities are quoted from upstream documentation. No independent
+        speed ranking or unsupported compatibility conclusion is implied.
+      </p>
+    </dialog>
+    <div class="sr-only" id="announcer" aria-live="polite"></div>
+  </body>
+</html>
