@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0d1115" />
+    <meta name="theme-color" content="#050505" />
     <meta
       name="description"
       content="Discover inference engines, inspect documented hardware and model compatibility, and compare runtimes with primary-source evidence."
     />
     <title>Awesome Inference Engines — Find your runtime</title>
+    <link rel="icon" href="./algodyne-mark.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
     <script type="module" src="./app.js"></script>
   </head>
@@ -20,9 +21,13 @@
           class="identity"
           aria-label="Awesome Inference Engines home"
         >
-          <span class="brand-symbol" aria-hidden="true"
-            ><span></span><span></span><span></span
-          ></span>
+          <img
+            class="brand-logo"
+            src="./algodyne-mark.svg"
+            alt=""
+            width="34"
+            height="34"
+          />
           <span class="brand-copy"
             ><strong>AWESOME</strong><small>INFERENCE ENGINES</small></span
           >
@@ -61,14 +66,33 @@
               <a href="#directory" class="secondary-action">Browse the index</a>
             </div>
           </div>
-          <div class="hero-visual" aria-hidden="true">
-            <div class="visual-grid"></div>
-            <div class="orbit orbit-one"></div>
-            <div class="orbit orbit-two"></div>
-            <div class="core-stack"><i></i><i></i><i></i><b></b></div>
-            <div class="visual-label top-label">MODEL · ENGINE · HARDWARE</div>
-            <div class="visual-label bottom-label">
-              EXECUTION / EVIDENCE / FIT
+          <div
+            class="hero-visual"
+            aria-label="Decision inputs and evidence outputs"
+          >
+            <div class="schema-label">ENGINE SELECTION / SOURCE-BACKED</div>
+            <div class="schema-row">
+              <span>01</span>
+              <div>
+                <small>INPUT</small><strong>Hardware + model + workload</strong>
+              </div>
+            </div>
+            <div class="schema-row">
+              <span>02</span>
+              <div>
+                <small>DISCOVERY</small
+                ><strong>Candidate inference engines</strong>
+              </div>
+            </div>
+            <div class="schema-row">
+              <span>03</span>
+              <div>
+                <small>EVIDENCE</small
+                ><strong>Upstream sources + reproducible runs</strong>
+              </div>
+            </div>
+            <div class="schema-foot">
+              COMPATIBILITY IS DOCUMENTED, NOT ASSUMED
             </div>
           </div>
           <div class="hero-stats" aria-label="Catalogue statistics">
