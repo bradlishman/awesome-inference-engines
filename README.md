@@ -29,6 +29,8 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 **Apple Silicon, specialized agents:** Explore Kapitsa, Espetero, and TensorFold. Check supported checkpoints, image input, and tool calls.
 
+**Apple Silicon, native MTP decoding:** Explore MTPLX for models with multi-token-prediction heads. Check model-pack support, unified-memory requirements, and measured benefit over plain decoding.
+
 **Consumer NVIDIA GPUs:** Explore ExLlamaV3 and llama.cpp. Match EXL3/GGUF format, CUDA generation, and KV-cache precision.
 
 **Large MoE beyond VRAM:** Explore Strata, FreeToken, Project Maya, and KTransformers. Expert residency and PCIe/SSD transfer costs dominate.
@@ -71,6 +73,7 @@ These projects deliberately optimize a narrower combination of model architectur
 - [MLX](https://github.com/ml-explore/mlx) - Apple Silicon array-compute framework used to build inference engines; **not a standalone LLM server**.
 - [mlx-lm](https://github.com/ml-explore/mlx-lm) - General-purpose LLM inference and fine-tuning on the MLX framework.
 - [mlx-vlm](https://github.com/Neywa-Labs/mlx-vlm) - Vision-language inference and model utilities on MLX.
+- [MTPLX](https://github.com/youssofal/MTPLX) - Apple Silicon MLX-based runtime with custom Metal kernels and native multi-token-prediction speculative decoding, plus OpenAI/Anthropic-compatible serving.
 - [oMLX](https://github.com/jundot/omlx) - MLX-based inference server with continuous batching and tiered, persistent KV caching.
 - [TurboFieldfare](https://github.com/drumih/turbo-fieldfare) - Swift/Metal, Gemma 4-specific engine that streams routed experts from SSD to reduce resident memory.
 - [vLLM Metal](https://github.com/vllm-project/vllm-metal) - Apple Silicon plugin for vLLM, with MLX as a primary compute backend.
