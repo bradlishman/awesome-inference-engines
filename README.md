@@ -31,6 +31,8 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 **Apple Silicon, native MTP decoding:** Explore MTPLX for models with multi-token-prediction heads. Check model-pack support, unified-memory requirements, and measured benefit over plain decoding.
 
+**Apple Silicon, speculative decoding:** Explore mlx-dspark for DSpark/DFlash and lookup-based speculation on MLX models. Check drafter compatibility, quantization, and workload-specific acceleration.
+
 **Consumer NVIDIA GPUs:** Explore ExLlamaV3 and llama.cpp. Match EXL3/GGUF format, CUDA generation, and KV-cache precision.
 
 **Large MoE beyond VRAM:** Explore Strata, FreeToken, Project Maya, and KTransformers. Expert residency and PCIe/SSD transfer costs dominate.
@@ -71,6 +73,7 @@ These projects deliberately optimize a narrower combination of model architectur
 - [Espetero](https://github.com/JarJarFran/espetero) - Native C++/Metal runtime supporting concurrent text, vision, and classification requests.
 - [Kapitsa](https://github.com/nace-ai/kapitsa) - Apple Silicon-native inference engine for selected model families and local coding-agent use.
 - [MLX](https://github.com/ml-explore/mlx) - Apple Silicon array-compute framework used to build inference engines; **not a standalone LLM server**.
+- [mlx-dspark](https://github.com/ARahim3/mlx-dspark) - MLX-native Apple Silicon inference engine with DSpark, DFlash, and lookup speculative decoding, target-model token verification, and OpenAI/Anthropic-compatible serving.
 - [mlx-lm](https://github.com/ml-explore/mlx-lm) - General-purpose LLM inference and fine-tuning on the MLX framework.
 - [mlx-vlm](https://github.com/Neywa-Labs/mlx-vlm) - Vision-language inference and model utilities on MLX.
 - [MTPLX](https://github.com/youssofal/MTPLX) - Apple Silicon MLX-based runtime with custom Metal kernels and native multi-token-prediction speculative decoding, plus OpenAI/Anthropic-compatible serving.
