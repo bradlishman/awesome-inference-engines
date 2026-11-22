@@ -6,6 +6,8 @@ The focus is **where and how model computation happens**: hardware, supported mo
 
 This is a curated technical reference, not a leaderboard. Performance claims should be evaluated against matching model weights, workloads, hardware, and correctness. Specialized engines can be outstanding within a narrow envelope and unsuitable outside it.
 
+For specific hardware, model, and memory constraints, see the [source-backed compatibility matrix](compatibility.md). For measurements you can reproduce on your own system, use the [streaming benchmark probe](bench/README.md). The matrix reports upstream claims; the probe does not imply that an engine has been independently tested.
+
 ## Contents
 
 - [Choose by hardware and workload](#choose-by-hardware-and-workload)
