@@ -1,13 +1,6 @@
 name: Publish engine explorer
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - README.md
-      - compatibility.md
-      - site/**
-      - .github/workflows/pages.yml
   workflow_dispatch:
 
 permissions:
