@@ -25,19 +25,19 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 **CPU or mixed CPU/GPU, GGUF:** Start with llama.cpp, ik_llama.cpp, or llama-cpp-turboquant. Check offload, quantization, context memory, and CPU bandwidth.
 
-**Apple Silicon, broad coverage:** Explore mlx-lm, MLX Swift LM, llama.cpp, and vLLM Metal. Check macOS/Metal requirements, unified memory, and batch size.
+**Apple Silicon, broad coverage:** Explore mlx-lm, MLX Swift LM, llama.cpp, vLLM Metal, and Magnitude. Check macOS/Metal requirements, unified memory, and batch size.
 
-**Apple Silicon, specialized agents:** Explore Kapitsa, Espetero, TensorFold, Rapid-MLX, and rMLX. Check supported checkpoints, image input, and tool calls.
+**Apple Silicon, specialized agents:** Explore Kapitsa, Espetero, TensorFold, Rapid-MLX, rMLX, Splash, and rec. Check supported checkpoints, image input, and tool calls.
 
 **Apple Silicon, native Swift:** Explore MLX Swift LM, swama, and SwiftLM. Distinguish embeddable libraries from standalone servers.
 
 **Apple Silicon, native MTP decoding:** Explore MTPLX for models with multi-token-prediction heads. Check model-pack support, unified-memory requirements, and measured benefit over plain decoding.
 
-**Apple Silicon, speculative decoding:** Explore mlx-dspark for DSpark/DFlash and lookup-based speculation on MLX models. Check drafter compatibility, quantization, and workload-specific acceleration.
+**Apple Silicon, speculative decoding:** Explore mlx-dspark for DSpark/DFlash and lookup-based speculation on MLX models, or Splash for DFlash 2 on its supported families. Check drafter compatibility, quantization, and workload-specific acceleration.
 
-**Consumer NVIDIA GPUs:** Explore ExLlamaV3, llama.cpp, and Paddock. Match checkpoint format, CUDA generation, and KV-cache precision.
+**Consumer NVIDIA GPUs:** Explore ExLlamaV3, llama.cpp, Paddock, Magnitude, and RustingStrata. Match checkpoint format, CUDA generation, and KV-cache precision.
 
-**Large MoE beyond VRAM:** Explore Strata, FreeToken, Project Maya, KTransformers, and atomic-engine. Expert residency and PCIe/SSD transfer costs dominate.
+**Large MoE beyond VRAM:** Explore Strata, FreeToken, Project Maya, KTransformers, atomic-engine, and Magnitude. Expert residency and PCIe/SSD transfer costs dominate.
 
 **Blackwell-specific local engines:** Explore Basalt, NInfer, Infernix, Hyperflare, and squid5090. Confirm compute capability, CUDA version, and model packs.
 
@@ -92,7 +92,9 @@ These projects deliberately optimize a narrower combination of model architectur
 - [MTPLX](https://github.com/youssofal/MTPLX) - Apple Silicon MLX-based runtime with custom Metal kernels and native multi-token-prediction speculative decoding, plus OpenAI/Anthropic-compatible serving.
 - [oMLX](https://github.com/jundot/omlx) - MLX-based inference server with continuous batching and tiered, persistent KV caching.
 - [Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) - Apple Silicon MLX serving engine with continuous batching, prefix caching, agent tool-call support, and OpenAI/Anthropic-compatible APIs.
+- [rec](https://github.com/recursive-oss/rec) - Apple Silicon engine for Recursive Flint models, targeting M4/M5 Pro and Max machines with at least 48 GB of unified memory.
 - [rMLX](https://github.com/Pushkinist/rMLX) - Rust-native, single-binary MLX inference server for Apple Silicon with multimodal generation and quantized KV-cache options.
+- [Splash](https://github.com/incoai/splash) - Apple Silicon engine for selected model families, with specialized Metal kernels, DFlash 2 speculative decoding, automatic memory planning, and OpenAI/Anthropic-compatible serving on macOS 26.4+.
 - [swama](https://github.com/Trans-N-ai/swama) - Swift/MLX local inference runtime for language, vision, embeddings, and speech with an OpenAI-compatible server and menu bar app.
 - [SwiftLM](https://github.com/SharpAI/SwiftLM) - Native Swift/MLX inference server for Apple Silicon with OpenAI-compatible serving and optional SSD-streamed MoE experts.
 - [TurboFieldfare](https://github.com/drumih/turbo-fieldfare) - Swift/Metal, Gemma 4-specific engine that streams routed experts from SSD to reduce resident memory.
@@ -104,13 +106,16 @@ These projects deliberately optimize a narrower combination of model architectur
 - [BitNet](https://github.com/microsoft/BitNet) - Specialized runtime for BitNet-family 1-bit and low-bit model architectures.
 - [ExLlamaV3](https://github.com/turboderp-org/exllamav3) - Consumer-GPU inference library with EXL3 quantization, batching, CPU offload, and parallelism.
 - [ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) - Performance-oriented llama.cpp fork with additional quantization and CPU/hybrid optimizations.
+- [Kinetic](https://github.com/Veloresearch/kinetic) - Rust GGUF runtime for Windows and Linux, running supported models on CPU, NVIDIA CUDA, or Vulkan, with an OpenAI-compatible server.
 - [llama-cpp-turboquant](https://github.com/TheTom/llama-cpp-turboquant) - Fork of llama.cpp adding TurboQuant low-bit KV-cache types and WHT-rotated or ConvRot weight quantization on CPU, CUDA, Metal, Vulkan, and SYCL.
 - [llama.cpp](https://github.com/ggml-org/llama.cpp) - Portable C/C++ model execution with GGUF, broad quantization, and diverse CPU/GPU backends.
+- [Magnitude](https://github.com/magnitudedev/magnitude) - Local GGUF engine that tiers MoE experts across GPU, RAM, and SSD, with automatic per-chip kernel tuning on Apple Silicon, NVIDIA, AMD, and Intel.
 - [mistral.rs](https://github.com/EricLBuehler/mistral.rs) - Rust inference runtime for local accelerated and quantized language/multimodal models.
 - [MLC-LLM](https://github.com/mlc-ai/mlc-llm) - Compiler and runtime deployment stack targeting multiple hardware platforms.
 - [ONNX Runtime GenAI](https://onnxruntime.ai/docs/genai/) - Generation runtime built on ONNX Runtime, handling token sampling, search, KV caching, and model-specific generation across execution providers.
 - [Paddock](https://github.com/truespar/paddock) - Native Rust inference engine with in-tree CUDA and Metal kernels, paged KV caching, and GGUF/safetensors loading; Apple Silicon support targets macOS 26+ and is pre-release.
 - [PowerInfer](https://github.com/Tiiny-AI/PowerInfer) - Local CPU/GPU heterogeneous LLM inference with activation-aware execution.
+- [RustingStrata](https://github.com/RustingStudio/RustingStrata) - Pure-Rust GGUF engine (not a Strata fork) with runtime-compiled CUDA or Vulkan kernels, overlapping CPU/GPU MoE experts, and an OpenAI/Anthropic-compatible server; check its **RustingStrata License 1.0**.
 
 ## Production and high-throughput serving
 
@@ -118,6 +123,7 @@ These projects deliberately optimize a narrower combination of model architectur
 - [LightLLM](https://github.com/ModelTC/LightLLM) - High-throughput LLM inference and dynamic request scheduling.
 - [LMDeploy](https://github.com/InternLM/lmdeploy) - Serving and deployment toolkit including the TurboMind inference engine.
 - [Mini-SGLang](https://github.com/sgl-project/mini-sglang) - Compact, runnable SGLang-style serving engine and readable reference for radix caching, chunked prefill, and tensor-parallel execution.
+- [RSInfer](https://github.com/open-agent-infra/RSInfer) - Production serving engine for NVIDIA SM100 with hot-reloadable schedulers and kernels, aimed at live agent-driven engine modification without full restarts.
 - [RTP-LLM](https://github.com/alibaba/rtp-llm) - Alibaba's production LLM inference engine with custom CUDA kernels, dynamic batching, prefix caching, and disaggregated prefill/decode execution.
 - [SGLang](https://github.com/sgl-project/sglang) - High-performance generation and serving with request scheduling, prefix caching, and structured output.
 - [Sonar](https://github.com/dphnAI/sonar) - vLLM-derived inference engine formerly named Aphrodite Engine.
@@ -172,6 +178,7 @@ An API endpoint, cluster scheduler, or model manager can be indispensable withou
 - [Awesome Local AI](https://github.com/janhq/awesome-local-ai) - Broad local AI ecosystem, beyond runtime implementations.
 - [Awesome Local LLM](https://github.com/rafska/awesome-local-llm) - Local model execution platforms, inference engines, and development tools.
 - [Awesome Local LLMs](https://github.com/vince-lam/awesome-local-llms) - Local LLM repository discovery and related ecosystem projects.
+- [InferenceX](https://github.com/SemiAnalysisAI/InferenceX) - Open benchmark platform and AgentX agentic-trace harness for comparing production inference servers; inspect each result's hardware and workload context.
 - [LlamaPerf Engines](https://llamaperf.com/engine) - Community-submitted engine performance results; inspect each result's measurement context.
 - [LLM Repos](https://llmrepos.com) - Repository discovery and project growth tracking.
 - [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/) - Community announcements and experiments; treat reported performance as leads for verification.
