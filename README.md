@@ -23,7 +23,7 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 ## Choose by hardware and workload
 
-**CPU or mixed CPU/GPU, GGUF:** Start with llama.cpp or ik_llama.cpp. Check offload, quantization, context memory, and CPU bandwidth.
+**CPU or mixed CPU/GPU, GGUF:** Start with llama.cpp, ik_llama.cpp, or llama-cpp-turboquant. Check offload, quantization, context memory, and CPU bandwidth.
 
 **Apple Silicon, broad coverage:** Explore mlx-lm, MLX Swift LM, llama.cpp, and vLLM Metal. Check macOS/Metal requirements, unified memory, and batch size.
 
@@ -35,15 +35,17 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 **Apple Silicon, speculative decoding:** Explore mlx-dspark for DSpark/DFlash and lookup-based speculation on MLX models. Check drafter compatibility, quantization, and workload-specific acceleration.
 
-**Consumer NVIDIA GPUs:** Explore ExLlamaV3 and llama.cpp. Match EXL3/GGUF format, CUDA generation, and KV-cache precision.
+**Consumer NVIDIA GPUs:** Explore ExLlamaV3, llama.cpp, and Paddock. Match checkpoint format, CUDA generation, and KV-cache precision.
 
-**Large MoE beyond VRAM:** Explore Strata, FreeToken, Project Maya, and KTransformers. Expert residency and PCIe/SSD transfer costs dominate.
+**Large MoE beyond VRAM:** Explore Strata, FreeToken, Project Maya, KTransformers, and atomic-engine. Expert residency and PCIe/SSD transfer costs dominate.
 
-**Blackwell-specific local engines:** Explore Basalt, NInfer, and Infernix. Confirm compute capability, CUDA version, and model packs.
+**Blackwell-specific local engines:** Explore Basalt, NInfer, Infernix, and Hyperflare. Confirm compute capability, CUDA version, and model packs.
 
 **AMD Strix Halo:** Explore Gufo. Confirm the exact Ryzen AI MAX target and ROCm setup.
 
-**Multi-user or distributed serving:** Explore vLLM, SGLang, RTP-LLM, and TensorRT-LLM. Measure throughput, TTFT, and tail latency together.
+**AWS Trainium:** Explore TrnRT. Confirm the Neuron SDK, instance type, and supported checkpoints.
+
+**Multi-user or distributed serving:** Explore vLLM, SGLang, RTP-LLM, TensorRT-LLM, and TokenSpeed. Measure throughput, TTFT, and tail latency together.
 
 **Phones, browsers, and embedded devices:** Explore LiteRT-LM, ONNX Runtime GenAI, ExecuTorch, MNN, and WebLLM. Check model conversion, memory, power, and accelerator delegates.
 
@@ -56,8 +58,10 @@ These projects deliberately optimize a narrower combination of model architectur
 - [Avalon](https://github.com/freriadoc/Avalon) - Fork of llama.cpp tuned for Qwen3.8-Flash-Next, with host/GPU expert caching and an emphasis on AMD/ROCm.
 - [Basalt](https://github.com/jesdga95/basalt) - Blackwell-focused local engine with Qwen and DeepSeek model paths and host-resident MoE experts.
 - [DeepInfer](https://github.com/deepseek-ai/DeepInfer) - DeepSeek's model-specific offline inference framework with optimized kernels, expert parallelism, asynchronous scheduling, and DSpark verification.
+- [DeepSeek Ultrafast](https://github.com/basetenlabs/deepseek-ultrafast) - Rust and CUDA engine for DeepSeek-V4.1-Flash on NVIDIA B200, B300, and GB300, with block draft-and-verify decoding, 1M-context serving, and RDMA KV-cache sharing; check its **Elastic License 2.0 / source-available terms**.
 - [FreeToken](https://github.com/FlashML-org/FreeToken) - Edge-native MoE serving engine with CPU/GPU co-execution, expert caching, and elastic memory allocation.
 - [Gufo](https://github.com/gufo-org/gufo) - Native engine tailored to AMD Strix Halo, spanning language and additional modalities.
+- [Hyperflare](https://github.com/NVIDIA/hyperflare-inference) - NVIDIA research prototype for local serving on SM120/SM121 GPUs and DGX Spark, with a Rust runtime, planned memory and conversation state, and no Python on the serve path.
 - [Infernix](https://github.com/BarachielFallen/infernix) - NInfer-derived C++/CUDA engine tuned for Qwen-family inference on RTX 50-series hardware.
 - [KTransformers](https://github.com/kvcache-ai/ktransformers) - Heterogeneous CPU/GPU inference and kernel framework aimed at large models and MoE workloads.
 - [NInfer](https://github.com/Neroued/ninfer) - C++/CUDA engine for selected models on RTX 5090 and DGX Spark, including speculative decoding and multi-device paths.
@@ -67,6 +71,7 @@ These projects deliberately optimize a narrower combination of model architectur
 - [Strata](https://github.com/Niko1221/Strata) - Heterogeneous local MoE inference using GPU, CPU, host memory, and SSD expert tiers.
 - [Sync-Strata](https://github.com/hiruhiru2005/sync-strata) - Strata fork with dedicated Qwen3.8-Flash-Next model packs and quantization work.
 - [TensorFold](https://github.com/ashhart/TensorFold) - Native Zig engine with direct Metal, CUDA, and Vulkan execution paths and speculative decoding.
+- [TrnRT](https://github.com/RunAnywhereAI/trnrt) - Open AWS Trainium2 serving engine with NKI megakernels, prefix caching, and an OpenAI-compatible API, currently focused on GLM-5.3-Flash.
 - [Xolotl](https://github.com/Indras-Mirror/Xolotl) - Substantially extended Strata descendant for large MoE models on consumer NVIDIA hardware.
 - [yasaheni](https://github.com/sahenjp/yasaheni) - Linux and GGUF input port of the YASAKANI engine.
 - [YASAKANI](https://github.com/yasakani-dev/yasakani) - Windows/NVIDIA model-specific CUDA engine, principally optimized for Qwen3.8-27B.
@@ -94,13 +99,16 @@ These projects deliberately optimize a narrower combination of model architectur
 
 ## General-purpose local inference
 
+- [atomic-engine](https://github.com/AtomicBot-ai/atomic-engine) - Fork of llama-cpp-turboquant (itself a llama.cpp fork) with memory-budgeted serving and SSD expert streaming for large MoE models, plus an OpenAI-compatible server.
 - [BitNet](https://github.com/microsoft/BitNet) - Specialized runtime for BitNet-family 1-bit and low-bit model architectures.
 - [ExLlamaV3](https://github.com/turboderp-org/exllamav3) - Consumer-GPU inference library with EXL3 quantization, batching, CPU offload, and parallelism.
 - [ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) - Performance-oriented llama.cpp fork with additional quantization and CPU/hybrid optimizations.
+- [llama-cpp-turboquant](https://github.com/TheTom/llama-cpp-turboquant) - Fork of llama.cpp adding TurboQuant low-bit KV-cache types and WHT-rotated or ConvRot weight quantization on CPU, CUDA, Metal, Vulkan, and SYCL.
 - [llama.cpp](https://github.com/ggml-org/llama.cpp) - Portable C/C++ model execution with GGUF, broad quantization, and diverse CPU/GPU backends.
 - [mistral.rs](https://github.com/EricLBuehler/mistral.rs) - Rust inference runtime for local accelerated and quantized language/multimodal models.
 - [MLC-LLM](https://github.com/mlc-ai/mlc-llm) - Compiler and runtime deployment stack targeting multiple hardware platforms.
 - [ONNX Runtime GenAI](https://onnxruntime.ai/docs/genai/) - Generation runtime built on ONNX Runtime, handling token sampling, search, KV caching, and model-specific generation across execution providers.
+- [Paddock](https://github.com/truespar/paddock) - Native Rust inference engine with in-tree CUDA and Metal kernels, paged KV caching, and GGUF/safetensors loading; Apple Silicon support targets macOS 26+ and is pre-release.
 - [PowerInfer](https://github.com/Tiiny-AI/PowerInfer) - Local CPU/GPU heterogeneous LLM inference with activation-aware execution.
 
 ## Production and high-throughput serving
@@ -113,6 +121,7 @@ These projects deliberately optimize a narrower combination of model architectur
 - [SGLang](https://github.com/sgl-project/sglang) - High-performance generation and serving with request scheduling, prefix caching, and structured output.
 - [Sonar](https://github.com/dphnAI/sonar) - vLLM-derived inference engine formerly named Aphrodite Engine.
 - [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) - NVIDIA-optimized LLM execution with kernel, quantization, batching, and multi-GPU capabilities.
+- [TokenSpeed](https://github.com/lightseekorg/tokenspeed) - Production serving engine for agentic workloads, with a C++ control plane, Python execution plane, and a pluggable kernel layer including Blackwell MLA implementations.
 - [vLLM](https://github.com/vllm-project/vllm) - Model-serving engine with continuous batching and paged KV-cache management.
 - [vLLM-Ascend](https://github.com/vllm-project/vllm-ascend) - Hardware plugin extending vLLM serving to Ascend accelerators.
 - [vLLM-Omni](https://github.com/vllm-project/vllm-omni) - Multimodal generation and serving within the vLLM ecosystem.
@@ -135,7 +144,9 @@ These are **building blocks**, not necessarily complete inference servers. They 
 - [CTranslate2](https://github.com/OpenNMT/CTranslate2) - Optimized Transformer inference runtime, widely useful for translation and speech workloads.
 - [FlashInfer](https://github.com/flashinfer-ai/flashinfer) - GPU attention, GEMM, and MoE kernel library and generator for inference engines.
 - [IREE](https://github.com/iree-org/iree) - Compiler and runtime for portable accelerator execution of ML models.
+- [ML Drift](https://github.com/google-ai-edge/ml-drift) - Google AI Edge on-device GPU inference framework and successor to the TFLite GPU delegate, with OpenCL, Metal, WebGPU, and OpenGL ES backends; **not a standalone LLM server**.
 - [OpenVINO GenAI](https://github.com/openvinotoolkit/openvino.genai) - Intel-oriented generative AI runtime APIs and optimized model pipelines.
+- [Resin](https://github.com/ekzhang/resin) - Experimental Rust scheduler and KV-cache library for building model-specific inference engines, with pluggable CUDA and MLX runners; **not a standalone LLM server**.
 
 ## Servers, frontends, and orchestration
 
@@ -143,6 +154,7 @@ An API endpoint, cluster scheduler, or model manager can be indispensable withou
 
 - [Dynamo](https://github.com/ai-dynamo/dynamo) - Distributed inference serving infrastructure coordinating backend execution and data movement.
 - [exo](https://github.com/exo-explore/exo) - Distributed local inference across personal devices with automatic peer discovery.
+- [Goethe](https://github.com/meshapplied/goethe) - Self-hosted OpenAI-, Anthropic-, and LiteLLM-compatible gateway with optional kernel packs that otherwise fall back to SGLang, then llama.cpp.
 - [KoboldCpp](https://github.com/LostRuins/koboldcpp) - Integrated llama.cpp-derived runtime and server, especially for story and roleplay use cases.
 - [llama-swap](https://github.com/mostlygeek/llama-swap) - Local proxy that starts and swaps underlying model servers on demand.
 - [llm-d](https://github.com/llm-d/llm-d) - Kubernetes-native architecture for distributed LLM serving.
