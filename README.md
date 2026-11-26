@@ -39,7 +39,7 @@ For specific hardware, model, and memory constraints, see the [source-backed com
 
 **Large MoE beyond VRAM:** Explore Strata, FreeToken, Project Maya, KTransformers, and atomic-engine. Expert residency and PCIe/SSD transfer costs dominate.
 
-**Blackwell-specific local engines:** Explore Basalt, NInfer, Infernix, and Hyperflare. Confirm compute capability, CUDA version, and model packs.
+**Blackwell-specific local engines:** Explore Basalt, NInfer, Infernix, Hyperflare, and squid5090. Confirm compute capability, CUDA version, and model packs.
 
 **AMD Strix Halo:** Explore Gufo. Confirm the exact Ryzen AI MAX target and ROCm setup.
 
@@ -68,6 +68,7 @@ These projects deliberately optimize a narrower combination of model architectur
 - [PolyStrata](https://github.com/simplexai-labs/PolyStrata) - Combines upstream Strata execution with separate backends for additional model families.
 - [Project Maya](https://github.com/mw00/project-maya) - Strata-derived, model-specialized engine targeting large GLM, DeepSeek, and MiniMax-family models.
 - [Speedy](https://github.com/DevDock-AI/Speedy) - Strata-derived MoE runtime tuned for consumer NVIDIA GPUs and agent workflows; check its **personal/non-commercial license**.
+- [squid5090](https://github.com/tensorfish/squid5090) - Zig and sm_120a CUDA engine for Inkling-2-Mini text and vision serving on NVIDIA RTX 5090-class GPUs, with an OpenAI-compatible HTTP server.
 - [Strata](https://github.com/Niko1221/Strata) - Heterogeneous local MoE inference using GPU, CPU, host memory, and SSD expert tiers.
 - [Sync-Strata](https://github.com/hiruhiru2005/sync-strata) - Strata fork with dedicated Qwen3.8-Flash-Next model packs and quantization work.
 - [TensorFold](https://github.com/ashhart/TensorFold) - Native Zig engine with direct Metal, CUDA, and Vulkan execution paths and speculative decoding.
